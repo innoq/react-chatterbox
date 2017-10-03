@@ -1,0 +1,31 @@
+{
+  "name": "react-chatterbox",
+  "version": "1.0.0",
+  "description": "A Chat-App-Example for training purposes.",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --content-base dist/",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/innoq/react-chatterbox.git"
+  },
+  "author": "tobias.eckardt@innoq.com",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "path": "^0.12.7",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  },
+  "dependencies": {
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0"
+  }
+}
