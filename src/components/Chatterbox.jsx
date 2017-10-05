@@ -1,5 +1,6 @@
 import React from "react";
+import Title from "./common/Title";
 
 export default function Chatterbox() {
-    return <h1>Hooray React!</h1>;
+    return <Title>Hooray React!</Title>;
 }
