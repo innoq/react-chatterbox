@@ -1,27 +1,28 @@
 import React, { Component } from "react";
 import moment from "moment";
 
-const NICKNAMES = ["Speedy Gonzales", "Bilbo Beutlin", "Gollum", "Uncle Sam", "William Wallace", "Robert the Bruce"];
-
 export default class NicknameSelector extends Component {
     constructor() {
         super();
 
         this.state = {
             nickname: null,
-            enteredDuration: 0
+            enteredDuration: 0,
+            newNickname: ""
         };
 
         this.onNicknameSubmit = this.onNicknameSubmit.bind(this);
+        this.updateNewNickname = this.updateNewNickname.bind(this);
     }
 
     onNicknameSubmit(event) {
         event.preventDefault();
 
         this.setState({
-            nickname: this.nicknameInputEl.value,
+            nickname: this.state.newNickname,
             enteredDuration: moment().fromNow()
         });
+
         this.enteredTime = Date.now();
     }
 
@@ -33,6 +34,12 @@ export default class NicknameSelector extends Component {
         }
     }
 
+    updateNewNickname(event){
+        this.setState({
+            newNickname: event.target.value
+        })
+    }
+
     componentDidMount() {
         this.memberTimer = setInterval(() => this.updateMemberTime(), 2000);
     }
@@ -42,11 +49,12 @@ export default class NicknameSelector extends Component {
     }
 
     render() {
-        const { nickname, enteredDuration } = this.state;
+        const { nickname, enteredDuration, newNickname } = this.state;
+
         return nickname === null ?
             <form onSubmit={this.onNicknameSubmit}>
                 <label htmlFor="nickname">Nickname: </label>
-                <input type="text" id="nickname" ref={input => this.nicknameInputEl = input} />
+                <input type="text" id="nickname" value={newNickname} onChange={this.updateNewNickname} />
                 <button type="submit" onClick={this.onNicknameSubmit}>Enter Chat</button>
             </form> :
             `Your Nickname: ${nickname} (entered ${enteredDuration})`
