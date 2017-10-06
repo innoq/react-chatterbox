@@ -13,6 +13,7 @@ export default class NicknameSelector extends Component {
 
         this.onNicknameSubmit = this.onNicknameSubmit.bind(this);
         this.updateNewNickname = this.updateNewNickname.bind(this);
+        this.leaveChat = this.leaveChat.bind(this);
     }
 
     onNicknameSubmit(event) {
@@ -40,6 +41,14 @@ export default class NicknameSelector extends Component {
         })
     }
 
+    leaveChat() {
+        this.setState({
+            nickname: null,
+            enteredDuration: 0,
+            newNickname: ""
+        });
+    }
+
     componentDidMount() {
         this.memberTimer = setInterval(() => this.updateMemberTime(), 2000);
     }
@@ -58,6 +67,9 @@ export default class NicknameSelector extends Component {
                 <button type="submit" disabled={newNickname === ""}
                         onClick={this.onNicknameSubmit}>Enter Chat</button>
             </form> :
-            `Your Nickname: ${nickname} (entered ${enteredDuration})`
+            <span>
+                {`Your Nickname: ${nickname} (entered ${enteredDuration})`}<br />
+                <button onClick={this.leaveChat}>Leave Chat</button>
+            </span>
     }
 }
