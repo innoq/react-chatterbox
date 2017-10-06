@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 
 const NICKNAMES = ["Speedy Gonzales", "Bilbo Beutlin", "Gollum", "Uncle Sam", "William Wallace", "Robert the Bruce"];
 
@@ -17,14 +18,17 @@ export default class NicknameSelector extends Component {
     onNicknameSubmit(event) {
         event.preventDefault();
 
-        this.setState({nickname: NICKNAMES[Math.floor(Math.random()*(NICKNAMES.length - 1))]});
+        this.setState({
+            nickname: NICKNAMES[Math.floor(Math.random()*(NICKNAMES.length - 1))],
+            enteredDuration: moment().fromNow()
+        });
         this.enteredTime = Date.now();
     }
 
     updateMemberTime() {
         if(this.state.nickname) {
             this.setState({
-                enteredDuration: Math.round((Date.now() - this.enteredTime) / 1000)
+                enteredDuration: moment(this.enteredTime).fromNow()
             });
         }
     }
@@ -43,6 +47,6 @@ export default class NicknameSelector extends Component {
             <form onSubmit={this.onNicknameSubmit}>
                 <button type="submit" onClick={this.onNicknameSubmit}>Enter Chat</button>
             </form> :
-            `Your Nickname: ${nickname} (entered ${enteredDuration} seconds ago)`
+            `Your Nickname: ${nickname} (entered ${enteredDuration})`
     }
 }
