@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import moment from "moment";
 
 export default class NicknameSelector extends Component {
-    constructor() {
+    constructor(props) {
         super();
 
         this.state = {
             nickname: null,
             enteredDuration: 0,
-            newNickname: ""
+            newNickname: props.proposedNickname
         };
 
         this.onNicknameSubmit = this.onNicknameSubmit.bind(this);
@@ -25,6 +26,7 @@ export default class NicknameSelector extends Component {
         });
 
         this.enteredTime = Date.now();
+        this.props.onStateChanged(true);
     }
 
     updateMemberTime() {
@@ -45,8 +47,10 @@ export default class NicknameSelector extends Component {
         this.setState({
             nickname: null,
             enteredDuration: 0,
-            newNickname: ""
+            newNickname: this.props.proposedNickname
         });
+
+        this.props.onStateChanged(false);
     }
 
     componentDidMount() {
@@ -73,3 +77,8 @@ export default class NicknameSelector extends Component {
             </span>
     }
 }
+
+NicknameSelector.propTypes = {
+    proposedNickname: PropTypes.string.isRequired,
+    onStateChanged: PropTypes.func
+};
