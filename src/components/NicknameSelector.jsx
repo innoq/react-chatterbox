@@ -55,7 +55,8 @@ export default class NicknameSelector extends Component {
             <form onSubmit={this.onNicknameSubmit}>
                 <label htmlFor="nickname">Nickname: </label>
                 <input type="text" id="nickname" value={newNickname} onChange={this.updateNewNickname} />
-                <button type="submit" onClick={this.onNicknameSubmit}>Enter Chat</button>
+                <button type="submit" disabled={newNickname === ""}
+                        onClick={this.onNicknameSubmit}>Enter Chat</button>
             </form> :
             `Your Nickname: ${nickname} (entered ${enteredDuration})`
     }
