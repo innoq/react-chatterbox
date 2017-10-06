@@ -19,7 +19,7 @@ export default class NicknameSelector extends Component {
         event.preventDefault();
 
         this.setState({
-            nickname: NICKNAMES[Math.floor(Math.random()*(NICKNAMES.length - 1))],
+            nickname: this.nicknameInputEl.value,
             enteredDuration: moment().fromNow()
         });
         this.enteredTime = Date.now();
@@ -45,6 +45,8 @@ export default class NicknameSelector extends Component {
         const { nickname, enteredDuration } = this.state;
         return nickname === null ?
             <form onSubmit={this.onNicknameSubmit}>
+                <label htmlFor="nickname">Nickname: </label>
+                <input type="text" id="nickname" ref={input => this.nicknameInputEl = input} />
                 <button type="submit" onClick={this.onNicknameSubmit}>Enter Chat</button>
             </form> :
             `Your Nickname: ${nickname} (entered ${enteredDuration})`
