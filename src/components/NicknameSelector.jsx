@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
+import {enterChatroom, leaveChatroom} from "../services/users";
 
 export default class NicknameSelector extends Component {
     constructor(props) {
@@ -25,12 +26,7 @@ export default class NicknameSelector extends Component {
 
         this.setState({ entering: true });
 
-        fetch("/api/users", {
-            method: "POST",
-            headers: new Headers({"Content-Type": "application/json"}),
-            body: JSON.stringify({nickname: this.state.newNickname})
-        }).
-            then(response => response.json()).
+        enterChatroom(this.state.newNickname).
             then(newUser => {
                     this.setState({
                         nickname: newUser.nickname,
@@ -63,9 +59,7 @@ export default class NicknameSelector extends Component {
             leaving: true,
         });
 
-        fetch("api/users/" + this.state.currentUser.id, {
-            method: "DELETE"
-            }).
+        leaveChatroom(this.state.currentUser.id).
             then(response => {
                 this.setState({
                     nickname: null,
