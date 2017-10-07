@@ -1,3 +1,5 @@
+import User from "../models/user";
+
 const USERS_URL = "/api/users";
 
 export function enterChatroom(newNickname) {
@@ -6,7 +8,8 @@ export function enterChatroom(newNickname) {
         headers: new Headers({"Content-Type": "application/json"}),
         body: JSON.stringify({nickname: newNickname})
     }).
-        then(response => response.json());
+        then(response => response.json()).
+        then(jsonObject => User.fromJson(jsonObject));
 }
 
 export function leaveChatroom(userId) {
