@@ -14,5 +14,13 @@ module.exports = {
             { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
             { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
+    },
+    devServer: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:3000",
+
+            }
+        }
     }
 };
