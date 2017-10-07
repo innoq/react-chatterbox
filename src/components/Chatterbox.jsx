@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Title from "./common/Title";
 import Subtitle from "./common/Subtitle";
 import NicknameSelector from "./NicknameSelector";
+import UserList from "./UserList";
 
 const NICKNAMES = ["Speedy Gonzales", "Bilbo Beutlin", "Gollum", "Uncle Sam", "William Wallace", "Robert the Bruce"];
 
@@ -31,6 +32,7 @@ export default class Chatterbox extends Component {
         return <span>
             <Title>Chatterbox{activeAppendix}</Title>
             <Subtitle>A super fancy react chat</Subtitle>
+            <UserList />
             <NicknameSelector proposedNickname={getRandomNick()} onStateChanged={this.onStateChanged} />
         </span>;
     }

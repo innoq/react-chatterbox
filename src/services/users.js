@@ -17,3 +17,11 @@ export function leaveChatroom(userId) {
         method: "DELETE"
     });
 }
+
+export function getUserList() {
+    return fetch(USERS_URL, {
+        method: "GET"
+    }).
+        then(response => response.json()).
+        then(usersObjArray => usersObjArray.map(userObj => User.fromJson(userObj)))
+}
