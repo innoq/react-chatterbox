@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Title from "./common/Title";
 import Subtitle from "./common/Subtitle";
-import NicknameSelector from "./NicknameSelector";
+import NicknameSelector from "./NicknameSelectorContainer";
 import UserList from "./UserList";
 
 const NICKNAMES = ["Speedy Gonzales", "Bilbo Beutlin", "Gollum", "Uncle Sam", "William Wallace", "Robert the Bruce"];
