@@ -12,6 +12,15 @@ export function enterChatroom(newNickname) {
         then(jsonObject => User.fromJson(jsonObject));
 }
 
+export function getUserProfile(userId) {
+    return fetch(USERS_URL + "/" + userId, {
+        method: "GET"
+    })
+        .then(response => response.json())
+        .then(userObject => User.fromJson(userObject))
+}
+
+
 export function leaveChatroom(userId) {
     return fetch(USERS_URL + "/" + userId, {
         method: "DELETE"

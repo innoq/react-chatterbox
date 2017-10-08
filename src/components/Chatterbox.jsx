@@ -3,6 +3,7 @@ import Title from "./common/Title";
 import Subtitle from "./common/Subtitle";
 import NicknameSelector from "./NicknameSelectorContainer";
 import UserList from "./UserList";
+import UserProfileContainer from "./user-profile/UserProfileContainer";
 
 const NICKNAMES = ["Speedy Gonzales", "Bilbo Beutlin", "Gollum", "Uncle Sam", "William Wallace", "Robert the Bruce"];
 
@@ -34,6 +35,7 @@ export default class Chatterbox extends Component {
             <Subtitle>A super fancy react chat</Subtitle>
             <UserList />
             <NicknameSelector proposedNickname={getRandomNick()} onStateChanged={this.onStateChanged} />
+            {this.state.entered && <UserProfileContainer userId={0} />}
         </span>;
     }
 }
