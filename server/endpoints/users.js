@@ -22,6 +22,16 @@ exports.createUser = (req, res) => {
     res.status(201).header("Location", newLocation).json(newUser);
 };
 
+exports.getUser = (req, res) => {
+    const userId = req.params.userId;
+    const foundUser = users.filter(user => user.id.toString() === userId)[0];
+    if(foundUser) {
+        res.status(200).json(foundUser);
+    } else {
+        res.status(404).end();
+    }
+};
+
 exports.deleteUser = (req, res) => {
     const userId = req.params.userId;
     const foundUser = users.filter(user => user.id.toString() === userId)[0];

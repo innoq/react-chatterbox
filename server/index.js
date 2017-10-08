@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.get(API_PATH, (req, res) => res.status(200).json(ROUTES));
 
 app.get(ROUTES.users, users.listUsers);
+app.get(ROUTES.user, users.getUser);
 app.post(ROUTES.users, users.createUser);
 app.delete(ROUTES.user, users.deleteUser);
 
