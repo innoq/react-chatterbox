@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getUserList } from "../services/users";
+import { Link } from "react-router-dom";
 
 export default class UserList extends Component {
     constructor() {
@@ -32,7 +33,9 @@ export default class UserList extends Component {
     render() {
         return <div>Current Members:
             <ul>
-                {this.state.userList.map(user => <li key={user.id}>{user.nickname}</li>)}
+                {this.state.userList.map(user => <Link to={`/user-profiles/${user.id}`} key={user.id}>
+                        <li>{user.nickname}</li>
+                    </Link>)}
             </ul>
         </div>;
     }
