@@ -9,17 +9,27 @@ export default class UserProfileContainer extends Component {
         super(props);
 
         this.state = {
-            pending: false,
+            pending: true,
             user: null
         };
     }
 
+    componentWillReceiveProps(newProps) {
+        if(newProps.userId !== this.props.userId) {
+            this.retrieveProfile(newProps.userId);
+        }
+    }
+
     componentDidMount() {
+        this.retrieveProfile(this.props.userId);
+    }
+
+    retrieveProfile(userId) {
         this.setState({
             pending: true
         });
 
-        getUserProfile(this.props.userId)
+        getUserProfile(userId)
             .then(user => this.setState({
                 pending: false,
                 user: user
