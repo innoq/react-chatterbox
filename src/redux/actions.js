@@ -1,13 +1,15 @@
 import { enterChatroom, leaveChatroom } from "../services/users";
 
-export function enterChatRequest(nickname, dispatch){
-    enterChatroom(nickname).then(userObj => {
-        dispatch(enterChat(userObj))
-    });
+export function enterChatRequest(nickname) {
+    return dispatch => {
+        dispatch({
+            type: "ENTER_CHAT_REQUEST"
+        });
 
-    return {
-        type: "ENTER_CHAT_REQUEST",
-    }
+        enterChatroom(nickname).then(userObj => {
+            dispatch(enterChat(userObj))
+        });
+    };
 }
 
 function enterChat(userObj) {
@@ -17,12 +19,14 @@ function enterChat(userObj) {
     }
 }
 
-export function leaveChatRequest(userId, dispatch){
-    leaveChatroom(userId).then(() => dispatch(leaveChat()));
+export function leaveChatRequest(userId){
+    return dispatch => {
+        dispatch({
+            type: "LEAVE_CHAT_REQUEST"
+        });
 
-    return {
-        type: "LEAVE_CHAT_REQUEST"
-    }
+        leaveChatroom(userId).then(() => dispatch(leaveChat()));
+    };
 }
 
 function leaveChat() {

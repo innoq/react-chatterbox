@@ -78,8 +78,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        enterChat: nickname => dispatch(createEnterChatRequest(nickname, dispatch)),
-        leaveChat: userId => dispatch(createLeaveChatRequest(userId, dispatch))
+        enterChat: nickname => dispatch(createEnterChatRequest(nickname)),
+        leaveChat: userId => dispatch(createLeaveChatRequest(userId))
     }
 };
 
