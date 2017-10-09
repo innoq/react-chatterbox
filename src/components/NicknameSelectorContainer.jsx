@@ -1,59 +1,44 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {enterChatroom, leaveChatroom} from "../services/users";
+import { connect } from "react-redux";
 import NicknameSelector from "./NicknameSelector";
 import StatusControl from "./StatusControl";
+import User from "../models/user";
 
-export default class NicknameSelectorContainer extends Component {
+import {
+    enterChat as createEnterChatAction,
+    leaveChat as createLeaveChatAction } from "../redux/actions";
+
+class NicknameSelectorContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             entering: false,
-            leaving: false,
-            currentUser: null
+            leaving: false
         };
 
         this.onNicknameSubmit = this.onNicknameSubmit.bind(this);
         this.leaveChat = this.leaveChat.bind(this);
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.currentUser !== this.props.currentUser){
+            this.props.onStateChanged(newProps.currentUser !== null);
+        }
+    }
+
     onNicknameSubmit(newNickname) {
-
-        this.setState({ entering: true });
-
-        enterChatroom(newNickname).
-        then(newUser => {
-                this.setState({
-                    entering: false,
-                    currentUser: newUser
-                });
-                this.enteredTime = new Date();
-                this.props.onStateChanged(true);
-            }
-        );
+        this.props.enterChat(newNickname);
     }
 
     leaveChat() {
-        this.setState({
-            leaving: true,
-        });
-
-        leaveChatroom(this.state.currentUser.id).
-        then(response => {
-            this.setState({
-                currentUser: null,
-                leaving: false
-            });
-
-            this.props.onStateChanged(false);
-        });
-
-
+        this.props.leaveChat();
     }
 
     render() {
-        const { currentUser, entering, leaving } = this.state;
+        const { entering, leaving } = this.state;
+        const { currentUser } = this.props;
 
         let output;
 
@@ -62,7 +47,7 @@ export default class NicknameSelectorContainer extends Component {
                 output = <NicknameSelector proposedNickname={this.props.proposedNickname}
                                            onNicknameSubmit={this.onNicknameSubmit}/>
             } else {
-                output = <StatusControl nickname={currentUser.nickname} enteredTime={this.enteredTime}
+                output = <StatusControl nickname={currentUser.nickname} enteredTime={currentUser.memberSince}
                                         onLeaveChat={this.leaveChat} />
             }
         } else {
@@ -80,5 +65,27 @@ export default class NicknameSelectorContainer extends Component {
 
 NicknameSelectorContainer.propTypes = {
     proposedNickname: PropTypes.string.isRequired,
-    onStateChanged: PropTypes.func
+    onStateChanged: PropTypes.func,
+    currentUser: PropTypes.instanceOf(User)
 };
+
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser && User.fromJson(state.currentUser) || null
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        enterChat: nickname => dispatch(createEnterChatAction(nickname)),
+        leaveChat: () => dispatch(createLeaveChatAction())
+    }
+};
+
+const ConnectedNicknameSelector = connect(
+    mapStateToProps, mapDispatchToProps
+)(NicknameSelectorContainer);
+
+export default ConnectedNicknameSelector;
+
+
