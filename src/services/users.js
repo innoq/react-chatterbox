@@ -8,8 +8,7 @@ export function enterChatroom(newNickname) {
         headers: new Headers({"Content-Type": "application/json"}),
         body: JSON.stringify({nickname: newNickname})
     }).
-        then(response => response.json()).
-        then(jsonObject => User.fromJson(jsonObject));
+        then(response => response.json())
 }
 
 export function getUserProfile(userId) {

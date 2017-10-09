@@ -8,6 +8,6 @@ export default class User {
 
     static fromJson(userObject) {
         const { id, nickname, memberSince, color } = userObject;
-        return new this(id, nickname, memberSince, color);
+        return new this(id, nickname, new Date(memberSince), color);
     }
 }

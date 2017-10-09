@@ -13,7 +13,7 @@ export default function UserProfile(props) {
             <dt>Color</dt>
             <dd>{user.color}</dd>
             <dt>Member Since</dt>
-            <dd>{user.memberSince}</dd>
+            <dd>{user.memberSince.toString()}</dd>
         </dl>
     </div>;
 }

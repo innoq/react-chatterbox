@@ -6,17 +6,12 @@ import StatusControl from "./StatusControl";
 import User from "../models/user";
 
 import {
-    enterChat as createEnterChatAction,
-    leaveChat as createLeaveChatAction } from "../redux/actions";
+    enterChatRequest as createEnterChatRequest,
+    leaveChatRequest as createLeaveChatRequest } from "../redux/actions";
 
 class NicknameSelectorContainer extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            entering: false,
-            leaving: false
-        };
 
         this.onNicknameSubmit = this.onNicknameSubmit.bind(this);
         this.leaveChat = this.leaveChat.bind(this);
@@ -33,12 +28,12 @@ class NicknameSelectorContainer extends Component {
     }
 
     leaveChat() {
-        this.props.leaveChat();
+        const { leaveChat, currentUser } = this.props;
+        leaveChat(currentUser.id);
     }
 
     render() {
-        const { entering, leaving } = this.state;
-        const { currentUser } = this.props;
+        const { currentUser, entering, leaving } = this.props;
 
         let output;
 
@@ -66,19 +61,25 @@ class NicknameSelectorContainer extends Component {
 NicknameSelectorContainer.propTypes = {
     proposedNickname: PropTypes.string.isRequired,
     onStateChanged: PropTypes.func,
-    currentUser: PropTypes.instanceOf(User)
+    currentUser: PropTypes.instanceOf(User),
+    entering: PropTypes.bool,
+    leaving: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
+    const { currentUser } = state;
+    const { user, entering, leaving } = currentUser;
     return {
-        currentUser: state.currentUser && User.fromJson(state.currentUser) || null
+        currentUser: user && User.fromJson(user) || null,
+        entering: entering,
+        leaving: leaving
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        enterChat: nickname => dispatch(createEnterChatAction(nickname)),
-        leaveChat: () => dispatch(createLeaveChatAction())
+        enterChat: nickname => dispatch(createEnterChatRequest(nickname, dispatch)),
+        leaveChat: userId => dispatch(createLeaveChatRequest(userId, dispatch))
     }
 };
 
